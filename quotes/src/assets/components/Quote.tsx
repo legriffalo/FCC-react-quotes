@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from './Button.tsx';
 import Link from './Link.tsx';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 
 // Define the type for the props
