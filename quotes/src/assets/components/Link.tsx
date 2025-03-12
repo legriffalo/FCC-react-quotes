@@ -10,13 +10,15 @@ interface LinkProps {
   twitter?: boolean;
   url?:string;
   target?: string;
+  query?: string;
   onClick?: () => void;
 }
 
-const Link: React.FC<LinkProps> = ({ id, twitter,url, target}) => {
+const Link: React.FC<LinkProps> = ({ id, twitter,url, target, query}) => {
+  let final = `${url}${query}`
   return (
     <div className="">
-        <a id = {id} href = {url} target = {target} rel="noopener noreferrer" className="btn btn-md" >
+        <a id = {id} href = {final} target = {target} rel="noopener noreferrer" className="btn btn-md" >
         <FontAwesomeIcon icon={twitter? faTwitter:faXTwitter} />
       </a>
     </div>

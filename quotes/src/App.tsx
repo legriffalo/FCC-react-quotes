@@ -38,7 +38,7 @@ function App() {
     <div className="flex flex-row items-center justify-center 
   bg-[url('https://img.freepik.com/free-vector/grey-hexagons-black-background_78370-2098.jpg')] h-full w-full">
 
-      <div id="quote-box" className="card bg-black border w-2/3 h-2/5">
+      <div id="quote-box" className="card bg-black border w-2/3 h-3/5">
         <Quote id="quote" text={quote["quote"]} author={quote["author"]} onClick={stateChange} />
 
       </div>
