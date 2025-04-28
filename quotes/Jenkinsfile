@@ -7,8 +7,10 @@ pipeline {
                 // Add build steps if your project requires them (e.g., npm install, npm build)
                 // For a static site, this stage might be skipped.
                 bat 'echo "Building (if necessary)..."'
+                dir('quotes'){
                 bat 'npm install'
                 bat 'npm build'
+                }
             }
         }
         stage('Deploy to Render') {
