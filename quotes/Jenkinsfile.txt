@@ -1,9 +1,36 @@
 pipeline {
-  agent any
-  tools {nodejs "node"}
-  stages {
-    stage('Build') {
-      steps {
-        git 'https://github.com/legriffalo/FCC-react-quotes.git'
-        bat 'npm install npm install'
-      }}}}
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git credentialsId: 'github-credentials', url: 'https://github.com/legriffalo/FCC-react-quotes.git'
+            }
+        }
+        stage('Build (if needed)') {
+            steps {
+                // Add build steps if your project requires them (e.g., npm install, npm build)
+                // For a static site, this stage might be skipped.
+                bat 'echo "Building (if necessary)..."'
+                bat 'npm install'
+                bat 'npm build'
+            }
+        }
+        stage('Deploy to Render') {
+            steps {
+                script {
+                    // **Method 1: Using Render Deploy Hook (Recommended)**
+                    // Requires setting up a Deploy Hook in your Render service settings.
+                    // The URL will be specific to your Render service.
+                    def deployHookUrl = 'YOUR_RENDER_DEPLOY_HOOK_URL'
+                    try {
+                        sh "curl -X POST '${deployHookUrl}'"
+                        echo "Successfully triggered Render deployment via Deploy Hook."
+                    } catch (Exception e) {
+                        error "Failed to trigger Render deployment: ${e.getMessage()}"
+                    }
+                }
+            }
+        }
+    }
+}
