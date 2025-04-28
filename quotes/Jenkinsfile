@@ -3,12 +3,7 @@ pipeline {
         label 'built-in'
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git credentialsId: '74c2a8f1-3b1a-4183-be81-d35de2a8e938', url: 'https://github.com/legriffalo/FCC-react-quotes.git'
-            }
-        }
+{
         stage('Build (if needed)') {
             steps {
                 // Add build steps if your project requires them (e.g., npm install, npm build)
