@@ -1,9 +1,7 @@
 pipeline {
-     agent {
-        label 'built-in'
-    }
+    agent any
 
-{
+    stages {
         stage('Build (if needed)') {
             steps {
                 // Add build steps if your project requires them (e.g., npm install, npm build)
