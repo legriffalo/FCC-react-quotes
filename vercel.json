@@ -6,5 +6,5 @@
   "routes": [
     { "src": "/(.*)", "dest": "/quotes/dist/index.html" }
   ],
-  "public": "quotes/dist"
+  "public": "/"
 }
