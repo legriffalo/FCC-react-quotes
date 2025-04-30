@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build (if needed)') {
+            steps {
+                // Add build steps if your project requires them (e.g., npm install, npm build)
+                // For a static site, this stage might be skipped.
+                bat 'echo "Building (if necessary)..."'
+                bat 'echo entering work dir quotes'
+                dir('quotes'){
+                bat 'echo "Contents of workspace root:"'
+                bat 'dir .'
+                bat 'echo "Contents of quotes directory:"'
+                bat 'echo "Running npm install..."'
+                bat 'npm install'
+                bat 'echo "Running npm run build..."'
+                bat 'npm run build'
+                bat 'npm run build'
+                bat 'echo checking contents for idst folder'
+                bat 'dir .'
+                }
+            }
+        }
+        stage('Deploy to Render') {
+            steps {
+                script {
+                    // **Method 1: Using Render Deploy Hook (Recommended)**
+                    // withCredentials([string(credentialsId: 'RENDER_DEPLOY_HOOK_URL', variable: 'DEPLOY_HOOK')]) {
+                    def deployHookUrl = env.RENDER_DEPLOY_HOOK_URL
+                    try {
+                        bat "curl -X POST \"${deployHookUrl}\""
+                        echo "Successfully triggered Render deployment via Deploy Hook."
+                    } catch (Exception e) {
+                        error "Failed to trigger Render deployment: ${e.getMessage()}"
+                    }
+
+                   
+                }
+            }
+        }
+    }
+}

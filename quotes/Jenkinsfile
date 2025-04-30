@@ -1,41 +1,29 @@
 pipeline {
     agent any
-
+    environment {
+        VERCEL_TOKEN = credentials('vercel-token') // Store your Vercel token as a Jenkins credential
+    }
     stages {
-        stage('Build (if needed)') {
+        stage('Build') {
             steps {
-                // Add build steps if your project requires them (e.g., npm install, npm build)
-                // For a static site, this stage might be skipped.
-                bat 'echo "Building (if necessary)..."'
-                bat 'echo entering work dir quotes'
-                dir('quotes'){
-                bat 'echo "Contents of workspace root:"'
-                bat 'dir .'
-                bat 'echo "Contents of quotes directory:"'
-                bat 'echo "Running npm install..."'
+                bat 'echo "Installing dependencies..."'
                 bat 'npm install'
-                bat 'echo "Running npm run build..."'
+                bat 'echo "Building the React application..."'
                 bat 'npm run build'
-                bat 'npm run build'
-                bat 'echo checking contents for idst folder'
-                bat 'dir .'
-                }
             }
         }
-        stage('Deploy to Render') {
+        stage('Deploy to Vercel') {
             steps {
                 script {
-                    // **Method 1: Using Render Deploy Hook (Recommended)**
-                    // withCredentials([string(credentialsId: 'RENDER_DEPLOY_HOOK_URL', variable: 'DEPLOY_HOOK')]) {
-                    def deployHookUrl = env.RENDER_DEPLOY_HOOK_URL
+                    def vercelProjectDir = './quotes' // Adjust this if your Vercel project isn't at the root
                     try {
-                        bat "curl -X POST \"${deployHookUrl}\""
-                        echo "Successfully triggered Render deployment via Deploy Hook."
+                        bat "npm install -g vercel" // Install Vercel CLI globally (if not already present on agent)
+                        bat "vercel pull --yes --token=${env.VERCEL_TOKEN}" // Link local directory to your Vercel project
+                        bat "vercel deploy --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd ${vercelProjectDir}/dist" // Deploy the 'build' folder
+                        echo "Successfully deployed to Vercel!"
                     } catch (Exception e) {
-                        error "Failed to trigger Render deployment: ${e.getMessage()}"
+                        error "Vercel deployment failed: ${e.getMessage()}"
                     }
-
-                   
                 }
             }
         }
