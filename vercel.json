@@ -3,8 +3,8 @@
   "builds": [
     { "src": "quotes/package.json", "use": "@vercel/node" }
   ],
-  "routes": [
-    { "src": "/(.*)", "dest": "index.html" }
+  "rewrites": [
+    { "src": "/(.*)", "dest": "/index.html" }
   ],
   "public": "assets"
 }
