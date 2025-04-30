@@ -4,7 +4,7 @@
     { "src": "quotes/package.json", "use": "@vercel/node" }
   ],
   "rewrites": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "public": "assets"
 }
