@@ -17,20 +17,21 @@ pipeline {
         stage('Deploy to Vercel') {
             steps {
                 script {
-                    def vercelProjectDir = './quotes' // Adjust this if your Vercel project isn't at the root
-                    //  def vercelProjectName = 'fcc-react-quotes'
-                   try {
+                    def vercelProjectDir = './quotes'
+                    def vercelProjectName = 'fcc-react-quotes' // REPLACE WITH YOUR ACTUAL VERCEL PROJECT NAME
+
+                    try {
                         bat "npm install -g vercel"
                         bat "cd ${vercelProjectDir}"
-                        bat "vercel pull --yes --token=${env.VERCEL_TOKEN}" // Pull without specifying the project
-                        bat "vercel deploy --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd dist" // Ensure correct build output dir
-                        echo "Successfully deployed to Vercel!"
+                        bat "vercel pull --yes --token=${env.VERCEL_TOKEN} --project=${vercelProjectName}"
+                        bat "vercel deploy --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd dist"
+                        echo "Successfully deployed to Vercel project: ${vercelProjectName}!"
                     } catch (Exception e) {
                         error "Vercel deployment failed: ${e.getMessage()}"
                     }
-                }
             }
         }
+    }
     }
 }
 
