@@ -23,7 +23,7 @@ pipeline {
                     try {
                         bat "npm i -g vercel@latest"
                         bat "cd ${vercelProjectDir}"
-                        bat "vercel pull --yes --token=${env.VERCEL_TOKEN} --project=${vercelProjectName}"
+                        // bat "vercel pull --yes --token=${env.VERCEL_TOKEN} --project=\"${vercelProjectName}\""
                         bat "vercel deploy --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd dist"
                         echo "Successfully deployed to Vercel project: ${vercelProjectName}!"
                     } catch (Exception e) {
