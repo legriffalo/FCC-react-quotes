@@ -1,13 +1,10 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "quotes/package.json",
-        "use": "@vercel/node"
-      }
-    ],
-    "routes": [
-      { "src": "/(.*)", "dest": "/quotes/dist/$1" }
-    ],
-    "public": true
-  }
+  "version": 2,
+  "builds": [
+    { "src": "quotes/package.json", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/quotes/dist/index.html" }
+  ],
+  "public": "quotes/dist"
+}
