@@ -18,11 +18,12 @@ pipeline {
             steps {
                 script {
                     def vercelProjectDir = './quotes' // Adjust this if your Vercel project isn't at the root
-                    try {
-                        bat "npm install -g vercel" // Install Vercel CLI globally (if not already present on agent)
-                        bat "vercel pull --yes --token=${env.VERCEL_TOKEN}" // Link local directory to your Vercel project
-                        bat "vercel deploy --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd ${vercelProjectDir}/dist" // Deploy the 'build' folder
-                        echo "Successfully deployed to Vercel!"
+                     def vercelProjectName = 'fcc-react-quotes'
+                     try {
+                        bat "npm install -g vercel"
+                        bat "vercel pull --yes --token=${env.VERCEL_TOKEN} ${vercelProjectName ? \"--project=${vercelProjectName}\" : ''}"
+                        bat "vercel deploy --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd ${vercelProjectDir}/dist" // Or /build, depending on your build output
+                        echo "Successfully deployed to Vercel project: ${vercelProjectName}!"
                     } catch (Exception e) {
                         error "Vercel deployment failed: ${e.getMessage()}"
                     }
@@ -31,3 +32,22 @@ pipeline {
         }
     }
 }
+
+
+// stage('Deploy to Vercel') {
+//     steps {
+//         script {
+//             def vercelProjectDir = './quotes'
+//             def vercelProjectName = 'your-vercel-project-name' // Replace with your actual Vercel project name
+
+//             try {
+//                 bat "npm install -g vercel"
+//                 bat "vercel pull --yes --token=${env.VERCEL_TOKEN} ${vercelProjectName ? \"--project=${vercelProjectName}\" : ''}"
+//                 bat "vercel deploy --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd ${vercelProjectDir}/dist" // Or /build, depending on your build output
+//                 echo "Successfully deployed to Vercel project: ${vercelProjectName}!"
+//             } catch (Exception e) {
+//                 error "Vercel deployment failed: ${e.getMessage()}"
+//             }
+//         }
+//     }
+// }
