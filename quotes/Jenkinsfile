@@ -21,7 +21,7 @@ pipeline {
                      def vercelProjectName = 'fcc-react-quotes'
                      try {
                         bat "npm install -g vercel"
-                        bat "vercel pull --yes --token=${env.VERCEL_TOKEN} ${vercelProjectName ? \"--project=${vercelProjectName}\" : ''}"
+                        bat "vercel pull --yes --token=${env.VERCEL_TOKEN} ${vercelProjectName ? '--project=${vercelProjectName}' : ''}"
                         bat "vercel deploy --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd ${vercelProjectDir}/dist" // Or /build, depending on your build output
                         echo "Successfully deployed to Vercel project: ${vercelProjectName}!"
                     } catch (Exception e) {
