@@ -4,7 +4,7 @@
     { "src": "quotes/package.json", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/quotes/dist/index.html" }
+    { "src": "/(.*)", "dest": "index.html" }
   ],
   "public": "/"
 }
