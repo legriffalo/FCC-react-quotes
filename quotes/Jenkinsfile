@@ -21,7 +21,7 @@ pipeline {
                     // The URL will be specific to your Render service.
                     def deployHookUrl = RENDER_DEPLOY_HOOK_URL
                     try {
-                        sh "curl -X POST '${deployHookUrl}'"
+                        bat "curl -X POST '${deployHookUrl}'"
                         echo "Successfully triggered Render deployment via Deploy Hook."
                     } catch (Exception e) {
                         error "Failed to trigger Render deployment: ${e.getMessage()}"
