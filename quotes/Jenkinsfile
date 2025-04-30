@@ -6,10 +6,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                dir('quotes'){
                 bat 'echo "Installing dependencies..."'
                 bat 'npm install'
                 bat 'echo "Building the React application..."'
                 bat 'npm run build'
+                }
             }
         }
         stage('Deploy to Vercel') {
