@@ -24,7 +24,7 @@ pipeline {
                         bat "npm i -g vercel@latest"
                         // bat "cd ${vercelProjectDir}"
                         // bat "vercel pull --yes --token=${env.VERCEL_TOKEN}"
-                        bat "vercel --prebuilt --prod --token=${env.VERCEL_TOKEN} --cwd ${vercelProjectDir}/dist"
+                        bat "vercel --prebuilt --prod --yes --token=${env.VERCEL_TOKEN} --cwd ${vercelProjectDir}/dist"
                         echo "Successfully deployed to Vercel project: ${vercelProjectName}!"
                     } catch (Exception e) {
                         error "Vercel deployment failed: ${e.getMessage()}"
